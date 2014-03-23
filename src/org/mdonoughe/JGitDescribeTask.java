@@ -218,13 +218,23 @@ public class JGitDescribeTask extends Task {
             throw new BuildException("Could not find target", e);
         }
 
-        final Map<ObjectId, String> tags = new HashMap<ObjectId,String>();
+        final Map<ObjectId, RevTag> tags = new HashMap<ObjectId, RevTag>();
 
         for (Map.Entry<String, Ref> tag : repository.getTags().entrySet()) {
             try {
-                RevTag r = walk.parseTag(tag.getValue().getObjectId());
-                ObjectId taggedCommit = r.getObject().getId();
-                tags.put(taggedCommit, tag.getKey());
+                final RevTag r = walk.parseTag(tag.getValue().getObjectId());
+                final ObjectId taggedCommit = r.getObject().getId();
+                // Has this commit already been seen with a different tag?
+                if (tags.containsKey(taggedCommit)) {
+                    final RevTag old = tags.get(taggedCommit);
+                    final Long myTime = (r.getTaggerIdent() == null) ? 0 : r.getTaggerIdent().getWhen().getTime();
+                    final Long oldTime = (old.getTaggerIdent() == null) ? 0 : old.getTaggerIdent().getWhen().getTime();
+                    // Skip this commit if the old one is newer.
+                    if (oldTime > myTime) {
+                        continue;
+                    }
+                }
+                tags.put(taggedCommit, r);
             } catch (IOException e) {
                 // Theres really no need to panic yet.
             }
@@ -248,7 +258,7 @@ public class JGitDescribeTask extends Task {
 
         final StringBuilder sb = new StringBuilder();
         if (best != null) {
-            sb.append(tags.get(best.getId()));
+            sb.append(tags.get(best.getId()).getTagName());
             if (bestDistance > 0) {
                 sb.append("-");
                 sb.append(bestDistance);
@@ -273,7 +283,7 @@ public class JGitDescribeTask extends Task {
      * @return
      * @throws BuildException
      */
-    private List<RevCommit> taggedParentCommits(final RevWalk walk, final RevCommit child, final Map<ObjectId, String> tagmap) throws BuildException {
+    private List<RevCommit> taggedParentCommits(final RevWalk walk, final RevCommit child, final Map<ObjectId, RevTag> tagmap) throws BuildException {
         final Queue<RevCommit> q = new LinkedList<RevCommit>();
         q.add(child);
         final List<RevCommit> taggedcommits = new LinkedList<RevCommit>();
