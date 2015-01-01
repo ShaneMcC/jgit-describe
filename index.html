@@ -1,101 +1,109 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset='utf-8'>
 
-  <title>ShaneMcC/jgit-describe @ GitHub</title>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Jgit-describe : An ant task that emulates git-describe using jgit">
 
-  <style type="text/css">
-    body {
-      margin-top: 1.0em;
-      background-color: #89bb9a;
-      font-family: Helvetica, Arial, FreeSans, san-serif;
-      color: #000000;
-    }
-    #container {
-      margin: 0 auto;
-      width: 700px;
-    }
-    h1 { font-size: 3.8em; color: #764465; margin-bottom: 3px; }
-    h1 .small { font-size: 0.4em; }
-    h1 a { text-decoration: none }
-    h2 { font-size: 1.5em; color: #764465; }
-    h3 { text-align: center; color: #764465; }
-    a { color: #764465; }
-    .description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; font-style: italic;}
-    .download { float: right; }
-    pre { background: #000; color: #fff; padding: 15px;}
-    hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
-    .footer { text-align:center; padding-top:30px; font-style: italic; }
-  </style>
-</head>
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
-<body>
-  <a href="https://github.com/ShaneMcC/jgit-describe"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
+    <title>Jgit-describe</title>
+  </head>
 
-  <div id="container">
+  <body>
 
-    <div class="download">
-      <a href="https://github.com/ShaneMcC/jgit-describe/zipball/master">
-        <img border="0" width="90" src="https://github.com/images/modules/download/zip.png"></a>
-      <a href="https://github.com/ShaneMcC/jgit-describe/tarball/master">
-        <img border="0" width="90" src="https://github.com/images/modules/download/tar.png"></a>
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/ShaneMcC/jgit-describe">View on GitHub</a>
+
+          <h1 id="project_title">Jgit-describe</h1>
+          <h2 id="project_tagline">An ant task that emulates git-describe using jgit</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/ShaneMcC/jgit-describe/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/ShaneMcC/jgit-describe/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
     </div>
 
-    <h1><a href="https://github.com/ShaneMcC/jgit-describe">jgit-describe</a>
-      <span class="small">by <a href="https://github.com/ShaneMcC">ShaneMcC</a></span></h1>
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a id="jgit-describe" class="anchor" href="#jgit-describe" aria-hidden="true"><span class="octicon octicon-link"></span></a>JGit-Describe</h1>
 
-    <div class="description">
-      An ant task that emulates git-describe using jgit
+<p>The <a href="http://www.dmdirc.com/">DMDirc Project</a> uses <code>git describe</code> to version all of its jars, which includes a large number of plugins which are built at build time as well as the main client itself. Due to changes to ANT some time ago which killed the performance of the <code>&lt;exec /&gt;</code> task that was previously used for this we had a need for a proper ant task to do this job.</p>
+
+<p>Based off <a href="in%20turn%20based%20off%20%5Bmdonoughe/jgit-describe%5D">erussell/jgit-describe</a> this is a slightly customised version of the original jgit-describe that supports passing a sub dir to the task such that the version of the last commit that affected that subdir is used, rather than the version of the whole repo. (This was required for the DMDirc plugin versioning.)</p>
+
+<p>As well as subdir support, this version can also handle .git-file based git repos (eg, submodules mainly).</p>
+
+<p>This uses the wonderful <a href="https://github.com/eclipse/jgit">jgit</a> library for any actual interaction with git, and both the jgit-describe.jar and a jgit.jar will be required to use this.</p>
+
+<p>(In future I will have the build script merge the required jgit files into the a separate jgit-describe-full.jar or so so that only a single jar is required.)</p>
+
+<h2>
+<a id="releases" class="anchor" href="#releases" aria-hidden="true"><span class="octicon octicon-link"></span></a>Releases</h2>
+
+<p>The latest released version of this project is <a href="releases/jgit-describe-0.6.jar">here</a>.</p>
+
+<p>Other releases can be found <a href="https://github.com/ShaneMcC/jgit-describe/releases">here</a>.</p>
+
+<h2>
+<a id="building" class="anchor" href="#building" aria-hidden="true"><span class="octicon octicon-link"></span></a>Building</h2>
+
+<p>If this is a fresh or newly updated checkout, run <code>git submodule update --init</code> to get the latest jgit submodule and then run <code>ant</code> (or <code>ant jar</code> to actually build the jar file.</p>
+
+<h2>
+<a id="ci" class="anchor" href="#ci" aria-hidden="true"><span class="octicon octicon-link"></span></a>CI</h2>
+
+<p>JGit-Describe Uses Travis-CI for Continuous Integration, the status of which is shown below.</p>
+
+<p>All pull requests must pass CI before being accepted.</p>
+
+<p><a href="https://travis-ci.org/ShaneMcC/jgit-describe"><img src="https://travis-ci.org/ShaneMcC/jgit-describe.svg?branch=master" alt="Build Status"></a></p>
+
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<p>Add a taskdef like the following to your build.xml.</p>
+
+<pre><code>&lt;taskdef name="git-describe" classname="org.mdonoughe.JGitDescribeTask" classpath="lib/jgit-describe.jar:lib/jgit.jar"/&gt;
+</code></pre>
+
+<p>To use the new git-describe task to populate a property with a string describing the current HEAD revision:</p>
+
+<pre><code>&lt;git-describe dir=".git" property="describe"/&gt;
+</code></pre>
+
+<p><code>dir</code> is the path to the .git directory
+<code>property</code> is the name of the property to populate</p>
+
+<p>To use the new git-describe task to populate a property with a string describing the last revision to affect the "src/co/uk/shanemcc/foobar" sub directory do:</p>
+
+<pre><code>&lt;git-describe dir=".git" property="describe" subdir="src/co/uk/shanemcc/foobar" /&gt;
+</code></pre>
+
+<p><code>subdir</code> is a path relative to the git repository root (NOT the current directory). This should also always use a forward slash (/) not a backslash () even on windows. (Although jgit-describe will automatically handle this if required). It is also possible to pass multiple paths in using a semi-colon (;) eg:</p>
+
+<pre><code>&lt;git-describe dir=".git" property="describe" subdir="src/co/uk/shanemcc/foobar;src/co/uk/shanemcc/baz" /&gt;
+</code></pre>
+
+<p>This will use the most recent commit that affected either repository.</p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Jgit-describe maintained by <a href="https://github.com/ShaneMcC">ShaneMcC</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
     </div>
 
     
 
-    
-
-    
-
-    
-      <h2>License</h2>
-      <p>BSD-Style License (as per jgit)</p>
-    
-
-    
-      <h2>Authors</h2>
-      <p>Eric Russell (erussell@ngs.org)<br/>Matthew Donoughe (mdonoughe@gmail.com)<br/>Shane Mc Cormack (shanemcc@gmail.com)<br/>      </p>
-    
-
-    
-      <h2>Contact</h2>
-      <p>Shane Mc Cormack (shanemcc@gmail.com)<br/>      </p>
-    
-
-    <h2>Download</h2>
-    <p>
-      You can download the source for this project in either
-      <a href="https://github.com/ShaneMcC/jgit-describe/zipball/master">zip</a> or
-      <a href="https://github.com/ShaneMcC/jgit-describe/tarball/master">tar formats.
-    </p>
-    <p>You can also clone the project with <a href="http://git-scm.com">Git</a>
-      by running:
-      <pre>$ git clone git://github.com/ShaneMcC/jgit-describe</pre>
-    </p>
-
-    <h2>Releases</h2>
-    <p>
-      The latest released version of this project is
-      <a href="http://shanemcc.github.io/jgit-describe/releases/jgit-describe-0.6.jar">here</a>.
-    </p>
-    <p>
-      Other releases can be found
-      <a href="https://github.com/ShaneMcC/jgit-describe/releases">here</a>.
-    </p>
-
-    <div class="footer">
-      get the source code on GitHub : <a href="https://github.com/ShaneMcC/jgit-describe">ShaneMcC/jgit-describe</a>
-    </div>
-
-  </div>
-
-</body>
+  </body>
 </html>
