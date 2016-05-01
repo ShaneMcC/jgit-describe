@@ -342,7 +342,9 @@ public class JGitDescribeTask extends Task {
                 Queue<RevCommit> pq = new LinkedList<RevCommit>();
                 pq.add(commit);
                 while (pq.size() > 0) {
-                    for (RevCommit pp : pq.remove().getParents()) {
+                    RevCommit rc = pq.remove();
+                    if (rc == null || rc.getParents() == null) { continue; }
+                    for (RevCommit pp : rc.getParents()) {
                         if (!seenb.contains(pp)) {
                             seenb.add(pp);
                             pq.add(pp);
